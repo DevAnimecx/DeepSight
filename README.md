@@ -14,12 +14,12 @@ One command. Zero config. Works everywhere.
 
 **macOS / Linux**
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)
 ```
 
 **Windows (PowerShell)**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex
 ```
 
 ## Quick Start

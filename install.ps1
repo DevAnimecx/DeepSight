@@ -48,5 +48,5 @@ Write-Host "  /review this PR"
 Write-Host "  /audit security of src/"
 Write-Host ""
 Write-Host "One-liner:" -ForegroundColor Yellow
-Write-Host "  iwr -useb https://raw.githubusercontent.com/DevAnimecx/deepsight/$Branch/install.ps1 | iex" -ForegroundColor Gray
+Write-Host "  iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$Branch/install.ps1 | iex" -ForegroundColor Gray
 Write-Host ""
