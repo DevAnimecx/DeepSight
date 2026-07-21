@@ -1,0 +1,129 @@
+{
+  "test_suite": "DeepSight Validation Tests",
+  "version": "1.0.0",
+  "tests": [
+    {
+      "id": "LAYER1-001",
+      "name": "SQL Injection Detection",
+      "input": "tests/vulnerable-code/sqli-test.js",
+      "agent": "security",
+      "expected_severity": "critical",
+      "expected_findings_min": 1,
+      "expected_rule": "sqli-concat",
+      "expected_output_format": "file:line → Critical → finding → fix",
+      "poc_required": true
+    },
+    {
+      "id": "LAYER1-002",
+      "name": "XSS Detection",
+      "input": "tests/vulnerable-code/xss-test.ts",
+      "agent": "security",
+      "expected_severity": "critical",
+      "expected_findings_min": 1,
+      "expected_rule": "xss-reflected",
+      "expected_output_format": "file:line → Critical → finding → fix",
+      "poc_required": true
+    },
+    {
+      "id": "LAYER1-003",
+      "name": "Hardcoded Secret Detection",
+      "input": "tests/vulnerable-code/hardcoded-secret-test.js",
+      "agent": "data",
+      "expected_severity": "critical",
+      "expected_findings_min": 1,
+      "expected_rule": "hardcoded-secret",
+      "expected_output_format": "file:line → Critical → finding → fix"
+    },
+    {
+      "id": "LAYER1-004",
+      "name": "God Object Detection",
+      "input": "tests/vulnerable-code/god-object-test.js",
+      "agent": "architecture",
+      "expected_severity": "high",
+      "expected_findings_min": 1,
+      "expected_rule": "god-object",
+      "expected_output_format": "file:line → High → finding → fix",
+      "metrics": {
+        "min_loc": 500,
+        "min_methods": 20
+      }
+    },
+    {
+      "id": "LAYER1-005",
+      "name": "N+1 Query Detection",
+      "input": "tests/vulnerable-code/nplus1-test.js",
+      "agent": "performance",
+      "expected_severity": "high",
+      "expected_findings_min": 1,
+      "expected_rule": "nplus1-query",
+      "expected_output_format": "file:line → High → finding → fix"
+    },
+    {
+      "id": "LAYER1-006",
+      "name": "Swallowed Exception Detection",
+      "input": "tests/vulnerable-code/swallowed-error-test.js",
+      "agent": "error",
+      "expected_severity": "high",
+      "expected_findings_min": 2,
+      "expected_rule": "swallowed-exception",
+      "expected_output_format": "file:line → High → finding → fix"
+    },
+    {
+      "id": "LAYER1-007",
+      "name": "Magic Numbers Detection",
+      "input": "tests/vulnerable-code/magic-numbers-test.js",
+      "agent": "smell",
+      "expected_severity": "medium",
+      "expected_findings_min": 3,
+      "expected_rule": "magic-number",
+      "expected_output_format": "file:line → Medium → finding → fix"
+    },
+    {
+      "id": "LAYER2-001",
+      "name": "Token Efficiency",
+      "description": "Ensure Layer 2 processing uses <10K tokens",
+      "expected_tokens_max": 10000,
+      "expected_diff_only": true,
+      "expected_full_file_reads": 0
+    },
+    {
+      "id": "LAYER3-001",
+      "name": "Cross-File Trace",
+      "description": "Verify Layer 3 traces data flow without loading full files",
+      "expected_tokens_max": 40000,
+      "expected_lazy_loading": true,
+      "expected_targeted_reads_only": true
+    },
+    {
+      "id": "OUTPUT-001",
+      "name": "Caveman Output Format",
+      "description": "All findings must use file:line → severity → finding → fix format",
+      "expected_no_filler": true,
+      "expected_no_generic_advice": true,
+      "expected_concrete_fixes": true
+    },
+    {
+      "id": "OUTPUT-002",
+      "name": "GitHub Comment Format",
+      "description": "Output must match report-template.md structure",
+      "expected_sections": [
+        "Executive Summary",
+        "Critical (Must Fix)",
+        "Architectural Warnings",
+        "Suggestions",
+        "Verified Correct"
+      ]
+    },
+    {
+      "id": "PREFLIGHT-001",
+      "name": "Grill Me Pre-Flight",
+      "description": "Three context questions must be asked before review",
+      "expected_questions": [
+        "What is the primary threat model?",
+        "Are there performance constraints (e.g., <100ms)?",
+        "What existing patterns should this mimic?"
+      ],
+      "expected_pause_on_vague": true
+    }
+  ]
+}

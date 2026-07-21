@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSight — AI-Powered Code Review, Simplified</title>
+  <meta name="description" content="DeepSight is a free, open-source tool that reviews your code using nine specialized AI agents. Catch bugs, find vulnerabilities, and improve code quality — fast.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Team Blackvault">
+  <link rel="canonical" href="https://DevAnimecx.github.io/deepsight/">
+  <meta name="theme-color" content="#1a1b2e">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://DevAnimecx.github.io/deepsight/">
+  <meta property="og:title" content="DeepSight — AI-Powered Code Review, Simplified">
+  <meta property="og:description" content="Free, open-source AI code review with nine specialized agents. Catch bugs fast.">
+  <meta property="og:image" content="https://DevAnimecx.github.io/deepsight/og-image.png">
+  <meta property="og:site_name" content="DeepSight">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DeepSight — AI-Powered Code Review, Simplified">
+  <meta name="twitter:description" content="Free, open-source AI code review with nine specialized agents.">
+  <meta name="twitter:image" content="https://DevAnimecx.github.io/deepsight/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div id="dynamic-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h1 id="hero-heading">
+              Smarter code reviews.<br>
+              <span class="gradient-text">Zero effort.</span>
+            </h1>
+            <p class="hero-description anim-fade-up delay-1">
+              DeepSight is a free, open-source tool that reviews your code using nine specialized AI agents. It catches security flaws, architecture issues, performance problems, and code smells — all in one place.
+            </p>
+            <div class="hero-actions anim-fade-up delay-2">
+              <a href="#install" class="neu-btn neu-btn-accent neu-btn-lg">
+                <i class="ph-bold ph-download-simple"></i>
+                Install Now
+              </a>
+              <a href="https://github.com/DevAnimecx/deepsight" target="_blank" rel="noopener noreferrer" class="neu-btn neu-btn-secondary neu-btn-lg">
+                <i class="ph-bold ph-github-logo"></i>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+          <div class="hero-visual anim-slide-right delay-3">
+            <div class="code-window" aria-label="DeepSight output preview">
+              <div class="code-window-header">
+                <span class="window-dot dot-red" aria-hidden="true"></span>
+                <span class="window-dot dot-yellow" aria-hidden="true"></span>
+                <span class="window-dot dot-green" aria-hidden="true"></span>
+                <span class="code-window-title">deepsight review output</span>
+              </div>
+              <div class="code-window-body">
+                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Sec</span><span class="c-keyword">]</span>  <span class="c-fix">2 vulnerabilities found</span></span>
+                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Arch</span><span class="c-keyword">]</span> <span class="c-fix">3 architecture issues</span></span>
+                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Perf</span><span class="c-keyword">]</span> <span class="c-fix">2 performance optimizations</span></span>
+                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Style</span><span class="c-keyword">]</span> <span class="c-fix">5 code smells cleaned up</span></span>
+                <span class="line"></span>
+                <span class="line"><span class="c-string">✓ Review complete · actionable results</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="features-title" class="section-title">What DeepSight checks.</h2>
+          <p class="section-subtitle">Nine AI agents, each an expert in one area, working together to review your code.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card neu-raised reveal reveal-delay-1">
+            <div class="card-icon icon-accent"><i class="ph-fill ph-shield-warning"></i></div>
+            <h3>Security</h3>
+            <p>Finds vulnerabilities like SQL injection, XSS, and authentication flaws before they reach production.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-2">
+            <div class="card-icon icon-danger"><i class="ph-fill ph-tree-structure"></i></div>
+            <h3>Architecture</h3>
+            <p>Detects circular dependencies, god objects, and layer violations that make code hard to maintain.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-3">
+            <div class="card-icon icon-warning"><i class="ph-fill ph-cube"></i></div>
+            <h3>Design Patterns</h3>
+            <p>Checks for SOLID principle violations and suggests better patterns that keep code clean.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-4">
+            <div class="card-icon icon-success"><i class="ph-fill ph-gauge"></i></div>
+            <h3>Performance</h3>
+            <p>Catches N+1 queries, memory leaks, and slow algorithms before they slow down your app.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-5">
+            <div class="card-icon icon-accent"><i class="ph-fill ph-flask"></i></div>
+            <h3>Testing</h3>
+            <p>Identifies untested methods, flaky tests, and coverage gaps so you ship with confidence.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-6">
+            <div class="card-icon icon-danger"><i class="ph-fill ph-warning-octagon"></i></div>
+            <h3>Reliability</h3>
+            <p>Spots swallowed errors, missing timeouts, and retry logic issues before they cause outages.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-1">
+            <div class="card-icon icon-warning"><i class="ph-fill ph-sparkle"></i></div>
+            <h3>Code Smells</h3>
+            <p>Finds long methods, magic numbers, duplication, and other warning signs of messy code.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-2">
+            <div class="card-icon icon-success"><i class="ph-fill ph-puzzle-piece"></i></div>
+            <h3>Frameworks</h3>
+            <p>Checks framework-specific idioms for React, Laravel, Next.js, and more so you follow best practices.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-3">
+            <div class="card-icon icon-accent"><i class="ph-fill ph-database"></i></div>
+            <h3>Privacy</h3>
+            <p>Scans for hardcoded secrets, PII leaks, and exposed tokens that put your users at risk.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" aria-labelledby="install-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="install-title" class="section-title">Install in seconds.</h2>
+          <p class="section-subtitle">Free, open source, zero configuration.</p>
+        </div>
+        <div class="install-wrapper reveal">
+          <div class="install-card neu-raised">
+            <div class="install-methods">
+              <div class="install-method neu-pressed">
+                <h4><i class="ph-bold ph-apple-logo"></i> macOS / Linux</h4>
+                <div class="code-block">
+                  <code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.sh)</code>
+                  <button class="copy-btn" aria-label="Copy installation command">
+                    <i class="ph-bold ph-copy"></i> Copy
+                  </button>
+                </div>
+              </div>
+              <div class="install-method neu-pressed">
+                <h4><i class="ph-bold ph-windows-logo"></i> Windows</h4>
+                <div class="code-block">
+                  <code>curl -fsSL https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.bat | cmd</code>
+                  <button class="copy-btn" aria-label="Copy Windows installation command">
+                    <i class="ph-bold ph-copy"></i> Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="about-title" class="section-title">Built for developers,<br>by developers.</h2>
+          <p class="section-subtitle">DeepSight is open source (MIT), free to use, and community-driven.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card neu-raised reveal reveal-delay-1">
+            <div class="card-icon icon-accent"><i class="ph-fill ph-lock-key-open"></i></div>
+            <h3>Open Source</h3>
+            <p>MIT licensed. No paywalls, no vendor lock-in. Use it, modify it, share it.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-2">
+            <div class="card-icon icon-success"><i class="ph-fill ph-users"></i></div>
+            <h3>Community-Driven</h3>
+            <p>Built by engineers for engineers. Contributions, feedback, and ideas are always welcome.</p>
+          </div>
+          <div class="feature-card neu-raised reveal reveal-delay-3">
+            <div class="card-icon icon-warning"><i class="ph-fill ph-rocket"></i></div>
+            <h3>Easy to Use</h3>
+            <p>One command to install. Works with any project. No configuration needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section reveal" aria-labelledby="cta-heading">
+      <div class="container">
+        <h2 id="cta-heading" class="section-title">Ready to review smarter?</h2>
+        <p class="section-subtitle">Star us on GitHub or install DeepSight now. It's free and open source.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/DevAnimecx/deepsight" target="_blank" rel="noopener noreferrer" class="neu-btn neu-btn-accent neu-btn-lg">
+            <i class="ph-bold ph-star"></i>
+            Star on GitHub
+          </a>
+          <a href="#install" class="neu-btn neu-btn-primary neu-btn-lg">
+            <i class="ph-bold ph-download-simple"></i>
+            Install Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="dynamic-footer"></div>
+
+  <script src="js/components.js"></script>
+</body>
+</html>
