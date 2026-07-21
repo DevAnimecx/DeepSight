@@ -1287,7 +1287,7 @@ p {
   .features-grid { grid-template-columns: 1fr; gap: 16px; }
   .agents-grid { grid-template-columns: 1fr; gap: 12px; }
   .install-tabs { grid-template-columns: 1fr; gap: 16px; }
-  .install-card { padding: 28px 20px; }
+  .install-tab { padding: 28px 20px; }
   .install-wrapper { max-width: 100%; }
   .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 60px; padding-top: 32px; }
   .stat-value { font-size: 36px; }
