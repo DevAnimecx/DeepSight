@@ -10,15 +10,16 @@
 
 ## Quick Install
 
-Download directly from GitHub — no git required.
+One command. Zero config. Works everywhere.
 
+**macOS / Linux**
 ```bash
-# Linux / macOS — one-liner
 bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.sh)
+```
 
-# Windows PowerShell
-Invoke-WebRequest https://github.com/DevAnimecx/deepsight/archive/refs/heads/main.zip -OutFile deepsight.zip
-Expand-Archive deepsight.zip -DestinationPath "$env:USERPROFILE\.agents\skills"
+**Windows (PowerShell)**
+```powershell
+iwr -useb https://raw.githubusercontent.com/DevAnimecx/deepsight/main/install.ps1 | iex
 ```
 
 ## Quick Start
@@ -147,5 +148,6 @@ Extend `references/security-rules.md` with custom rules or company-specific poli
 ## License
 
 MIT
+
 
 

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const GITHUB_REPO = 'https://github.com/DevAnimecx/deepsight';
+  const GITHUB_REPO = 'https://github.com/DevAnimecx/DeepSight';
   const HOME_URL = 'index.html';
 
   async function loadComponent(url, targetId, fallback) {
@@ -93,18 +93,27 @@
       btn.addEventListener('click', () => {
         const block = btn.closest('.code-block');
         if (!block) return;
-        const text = block.textContent.replace('Copy', '').trim();
+        const code = block.querySelector('code');
+        const text = code ? code.textContent.trim() : block.textContent.replace(/Copy|Copied|Error/g, '').trim();
         navigator.clipboard.writeText(text).then(() => {
           btn.classList.add('copied');
-          btn.innerHTML = '<i class="ph ph-check" aria-hidden="true"></i> Copied';
+          const icon = btn.querySelector('i');
+          const textEl = btn.querySelector('.copy-text');
+          if (icon) icon.className = 'ph-bold ph-check';
+          if (textEl) textEl.textContent = 'Copied';
           setTimeout(() => {
             btn.classList.remove('copied');
-            btn.innerHTML = '<i class="ph ph-copy" aria-hidden="true"></i> Copy';
+            if (icon) icon.className = 'ph-bold ph-copy';
+            if (textEl) textEl.textContent = 'Copy';
           }, 2000);
         }).catch(() => {
-          btn.innerHTML = '<i class="ph ph-x" aria-hidden="true"></i> Error';
+          const icon = btn.querySelector('i');
+          const textEl = btn.querySelector('.copy-text');
+          if (icon) icon.className = 'ph-bold ph-x';
+          if (textEl) textEl.textContent = 'Error';
           setTimeout(() => {
-            btn.innerHTML = '<i class="ph ph-copy" aria-hidden="true"></i> Copy';
+            if (icon) icon.className = 'ph-bold ph-copy';
+            if (textEl) textEl.textContent = 'Copy';
           }, 1500);
         });
       });
