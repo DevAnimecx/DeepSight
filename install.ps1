@@ -1,7 +1,8 @@
-param([string]$Dir = "$env:USERPROFILE\.agents\skills\deepsight")
+param([string]$Dir = "$env:APPDATA\Claude\agents\skills\deepsight")
 
 $Repo = "DevAnimecx/DeepSight"
 $Branch = "main"
+$CodeDir = "$env:USERPROFILE\.agents\skills\deepsight"
 
 Write-Host ""
 Write-Host "╔═══════════════════════════════════════════╗" -ForegroundColor Cyan
@@ -10,7 +11,8 @@ Write-Host "║     AI-Powered Code Review — Free         ║" -ForegroundColo
 Write-Host "╚═══════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
-if (-not (Test-Path $Dir)) { New-Item -ItemType Directory -Path $Dir -Force | Out-Null }
+$destinations = @($Dir)
+if ($CodeDir -ne $Dir) { $destinations += $CodeDir }
 
 $tmp = "$env:TEMP\deepsight.zip"
 $extractDir = "$env:TEMP\deepsight-extract"
@@ -24,18 +26,28 @@ try {
   $root = Get-ChildItem $extractDir | Select-Object -First 1
   if (-not $root) { throw "Extract failed" }
 
-  Get-ChildItem -Path $root.FullName | Copy-Item -Destination $Dir -Recurse -Force
+  foreach ($dest in $destinations) {
+    New-Item -ItemType Directory -Path $dest -Force | Out-Null
+    Get-ChildItem -Path $root.FullName | Copy-Item -Destination $dest -Recurse -Force
+    Write-Host "✓ Installed to: $dest" -ForegroundColor Green
+  }
+
   Remove-Item $tmp -Force -ErrorAction SilentlyContinue
   Remove-Item $extractDir -Recurse -Force -ErrorAction SilentlyContinue
-
-  Write-Host "✓ DeepSight v0.1.1 installed to: $Dir" -ForegroundColor Green
 } catch {
   Write-Host "Download failed: $_" -ForegroundColor Red
   $git = Get-Command git -ErrorAction SilentlyContinue
   if ($git) {
     Write-Host "Falling back to git clone..." -ForegroundColor Yellow
-    if (Test-Path $Dir) { Remove-Item $Dir -Recurse -Force -ErrorAction SilentlyContinue }
-    git clone --depth 1 "https://github.com/$Repo.git" $Dir
+    $primary = $destinations[0]
+    if (Test-Path $primary) { Remove-Item $primary -Recurse -Force -ErrorAction SilentlyContinue }
+    git clone --depth 1 "https://github.com/$Repo.git" $primary
+    if ($destinations.Count -gt 1 -and $destinations[1] -ne $primary) {
+      $secondary = $destinations[1]
+      New-Item -ItemType Directory -Path $secondary -Force | Out-Null
+      Get-ChildItem -Path $primary | Copy-Item -Destination $secondary -Recurse -Force
+      Write-Host "✓ Installed to: $secondary" -ForegroundColor Green
+    }
   } else {
     Write-Host "Install failed. Check connection or install git." -ForegroundColor Red
     exit 1

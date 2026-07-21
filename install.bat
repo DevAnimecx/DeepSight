@@ -1,7 +1,8 @@
 @echo off
 REM DeepSight — Windows Launcher
-REM Calls install.ps1 (the real installer)
-REM Usage: powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"
+REM Installs to: Claude Desktop (%APPDATA%\Claude\agents\skills\deepsight)
+REM              Claude Code  (%USERPROFILE%\.agents\skills\deepsight)
+REM One-liner:  powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"
 cd /d "%~dp0"
 powershell -ExecutionPolicy Bypass -File "%~dp0install.ps1" %*
 pause

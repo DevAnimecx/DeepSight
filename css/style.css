@@ -983,6 +983,13 @@ p {
   font-size: 18px;
 }
 
+.install-footnote {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 /* ── CTA Section ── */
 .cta-section {
   text-align: center;

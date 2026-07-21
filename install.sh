@@ -6,6 +6,13 @@ REPO="DevAnimecx/DeepSight"
 BRANCH="main"
 DIR="${1:-$HOME/.agents/skills/deepsight}"
 
+# Claude Desktop directory (macOS default, fallback Linux)
+if [[ "$(uname)" == "Darwin" ]]; then
+  DESKTOP_DIR="$HOME/Library/Application Support/Claude/agents/skills/deepsight"
+else
+  DESKTOP_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/Claude/agents/skills/deepsight"
+fi
+
 echo -e "${C}"
 cat << "EOF"
 ╔═══════════════════════════════════════════╗
@@ -16,6 +23,7 @@ EOF
 echo -e "${N}"
 
 mkdir -p "$DIR"
+mkdir -p "$DESKTOP_DIR"
 
 if command -v curl &>/dev/null; then
   echo -e "${B}Downloading DeepSight...${N}"
@@ -36,10 +44,16 @@ if [ -z "${OK:-}" ]; then
   fi
 fi
 
+# Copy to Claude Desktop directory
+cp -r "$DIR/"* "$DESKTOP_DIR/" 2>/dev/null || true
+
 chmod +x "$DIR/scripts"/*.sh "$DIR/scripts"/*.py 2>/dev/null || true
+chmod +x "$DESKTOP_DIR/scripts"/*.sh "$DESKTOP_DIR/scripts"/*.py 2>/dev/null || true
 
 echo ""
-echo -e "${G}✓ DeepSight v0.1.1 installed to: $DIR${N}"
+echo -e "${G}✓ DeepSight v0.1.1 installed${N}"
+echo -e "${G}  → $DIR${N}"
+echo -e "${G}  → $DESKTOP_DIR${N}"
 echo ""
 echo -e "${C}Quick Start:${N}"
 echo "  /review this PR"

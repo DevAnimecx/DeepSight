@@ -10,7 +10,7 @@
 
 ## Quick Install
 
-One command. Zero config. Works everywhere.
+One command. Installs to both **Claude Desktop** and **Claude Code**.
 
 **macOS / Linux**
 ```bash
