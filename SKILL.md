@@ -12,18 +12,21 @@ description: >
 
 ## Install (One Command)
 
+One command installs to both **Claude Desktop** and **Claude Code**:
+
 ```bash
-bash install.sh
-# or Windows:
-install.bat
+# macOS / Linux
+bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)
+
+# Windows (PowerShell)
+iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex
 ```
 
 Or copy this folder to any of these paths:
-- `~/.agents/skills/deepsight/`
-- `~/.zcode/skills/deepsight/`
-- `.zcode/skills/deepsight/` (project-scoped)
-
-That's it. No dependencies. No config. Just works.
+- `~/.agents/skills/deepsight/` (Claude Code CLI)
+- `%APPDATA%\Claude\agents\skills\deepsight` (Claude Desktop — Windows)
+- `~/Library/Application Support/Claude/agents/skills/deepsight/` (Claude Desktop — macOS)
+- `~/.config/Claude/agents/skills/deepsight/` (Claude Desktop — Linux)
 
 ## Three-Layer Depth-Charge Protocol
 

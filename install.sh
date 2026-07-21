@@ -4,9 +4,9 @@ set -euo pipefail
 R='\033[0;31m'; G='\033[0;32m'; Y='\033[1;33m'; B='\033[0;34m'; C='\033[0;36m'; N='\033[0m'
 REPO="DevAnimecx/DeepSight"
 BRANCH="main"
+VERSION="v0.1.1"
 DIR="${1:-$HOME/.agents/skills/deepsight}"
 
-# Claude Desktop directory (macOS default, fallback Linux)
 if [[ "$(uname)" == "Darwin" ]]; then
   DESKTOP_DIR="$HOME/Library/Application Support/Claude/agents/skills/deepsight"
 else
@@ -22,36 +22,44 @@ cat << "EOF"
 EOF
 echo -e "${N}"
 
-mkdir -p "$DIR"
-mkdir -p "$DESKTOP_DIR"
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
 
 if command -v curl &>/dev/null; then
   echo -e "${B}Downloading DeepSight...${N}"
-  curl -fsSL "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" | tar xz --strip=1 -C "$DIR" 2>/dev/null && OK=1
+  curl -fsSL "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" -o "$TMPDIR/repo.tar.gz"
 elif command -v wget &>/dev/null; then
   echo -e "${B}Downloading DeepSight...${N}"
-  wget -qO- "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" | tar xz --strip=1 -C "$DIR" 2>/dev/null && OK=1
+  wget -q "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" -O "$TMPDIR/repo.tar.gz"
+else
+  echo -e "${R}Need curl, wget, or git. Install one and try again.${N}"
+  exit 1
 fi
 
-if [ -z "${OK:-}" ]; then
+if [ ! -s "$TMPDIR/repo.tar.gz" ]; then
+  echo -e "${Y}Download failed. Trying git clone...${N}"
   if command -v git &>/dev/null; then
-    echo -e "${Y}Download failed. Cloning instead...${N}"
-    rm -rf "$DIR"
-    git clone --depth 1 "https://github.com/$REPO.git" "$DIR"
+    git clone --depth 1 "https://github.com/$REPO.git" "$TMPDIR/repo"
+    mkdir -p "$DIR" "$DESKTOP_DIR"
+    cp -r "$TMPDIR/repo/"* "$DIR/"
+    cp -r "$TMPDIR/repo/"* "$DESKTOP_DIR/" 2>/dev/null || true
+    rm -rf "$TMPDIR/repo"
   else
-    echo -e "${R}Install failed. Need curl, wget, or git.${N}"
+    echo -e "${R}Install failed. No git available.${N}"
     exit 1
   fi
+else
+  echo -e "${B}Extracting...${N}"
+  mkdir -p "$DIR" "$DESKTOP_DIR"
+  tar xzf "$TMPDIR/repo.tar.gz" --strip=1 -C "$DIR"
+  cp -r "$DIR/"* "$DESKTOP_DIR/" 2>/dev/null || true
 fi
-
-# Copy to Claude Desktop directory
-cp -r "$DIR/"* "$DESKTOP_DIR/" 2>/dev/null || true
 
 chmod +x "$DIR/scripts"/*.sh "$DIR/scripts"/*.py 2>/dev/null || true
 chmod +x "$DESKTOP_DIR/scripts"/*.sh "$DESKTOP_DIR/scripts"/*.py 2>/dev/null || true
 
 echo ""
-echo -e "${G}✓ DeepSight v0.1.1 installed${N}"
+echo -e "${G}✓ DeepSight $VERSION installed${N}"
 echo -e "${G}  → $DIR${N}"
 echo -e "${G}  → $DESKTOP_DIR${N}"
 echo ""
