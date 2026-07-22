@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://DevAnimecx.github.io/deepsight/sitemap.xml
+Sitemap: https://deepsightskill.vercel.app/sitemap.xml
 
 # Crawl-delay to be respectful
 Crawl-delay: 2
