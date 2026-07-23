@@ -249,53 +249,60 @@
           <p class="section-subtitle">One command. Zero config. Works everywhere.</p>
         </div>
         <div class="install-wrapper reveal">
-          <div class="install-tabs">
-            <div class="install-tab install-tab-featured neu-pressed">
-              <div class="install-recommended">Fastest</div>
-              <div class="tab-header">
-                <i class="ph-bold ph-lightning"></i>
-                <span>Any OS — npx</span>
-              </div>
-              <div class="tab-desc">Requires Node.js. Auto-detects all AI platforms.</div>
-              <div class="code-block">
-                <span class="code-label">npx</span>
-                <span class="code-prompt">$</span> <code>npx deepsight</code>
-                <button class="copy-btn" aria-label="Copy command">
-                  <i class="ph-bold ph-copy"></i>
-                  <span class="copy-text">Copy</span>
-                </button>
-              </div>
-              <div class="tab-meta">Also: <code>npx deepsight --detect</code> to scan platforms</div>
-            </div>
-            <div class="install-tab neu-pressed">
-              <div class="tab-header">
-                <i class="ph-bold ph-apple-logo"></i>
-                <i class="ph-bold ph-linux-logo"></i>
-                <span>macOS / Linux</span>
-              </div>
-              <div class="tab-desc">No Node.js needed. Uses curl + bash.</div>
-              <div class="code-block">
-                <span class="code-label">bash</span>
-                <span class="code-prompt">$</span> <code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)</code>
-                <button class="copy-btn" aria-label="Copy command">
-                  <i class="ph-bold ph-copy"></i>
-                  <span class="copy-text">Copy</span>
-                </button>
+          <div class="install-grid">
+            <div class="install-card install-card-featured neu-raised">
+              <div class="install-badge">Recommended</div>
+              <div class="install-card-body">
+                <div class="install-card-icon"><i class="ph-fill ph-lightning"></i></div>
+                <div class="install-card-content">
+                  <h3 class="install-card-title">Any OS — one command</h3>
+                  <p class="install-card-desc">Auto-detects all AI platforms and installs to every one of them. <strong>Fastest path.</strong></p>
+                  <div class="install-code-block">
+                    <span class="install-code-prompt">$</span>
+                    <code>npx deepsight</code>
+                    <button class="copy-btn" aria-label="Copy command">
+                      <i class="ph-bold ph-copy"></i>
+                      <span class="copy-text">Copy</span>
+                    </button>
+                  </div>
+                  <div class="install-card-meta">Requires Node.js &nbsp;·&nbsp; <code>npx deepsight --detect</code> to scan</div>
+                </div>
               </div>
             </div>
-            <div class="install-tab neu-pressed">
-              <div class="tab-header">
-                <i class="ph-bold ph-windows-logo"></i>
-                <span>Windows</span>
+            <div class="install-subgrid">
+              <div class="install-card neu-raised">
+                <div class="install-card-body">
+                  <div class="install-card-icon icon-macos"><i class="ph-fill ph-apple-logo"></i><i class="ph-fill ph-linux-logo"></i></div>
+                  <div class="install-card-content">
+                    <h3 class="install-card-title">macOS / Linux</h3>
+                    <p class="install-card-desc">No Node.js needed. Uses curl + bash.</p>
+                    <div class="install-code-block">
+                      <span class="install-code-prompt">$</span>
+                      <code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)</code>
+                      <button class="copy-btn" aria-label="Copy command">
+                        <i class="ph-bold ph-copy"></i>
+                        <span class="copy-text">Copy</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="tab-desc">Works in CMD or PowerShell.</div>
-              <div class="code-block">
-                <span class="code-label">cmd</span>
-                <span class="code-prompt">></span> <code>powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"</code>
-                <button class="copy-btn" aria-label="Copy command">
-                  <i class="ph-bold ph-copy"></i>
-                  <span class="copy-text">Copy</span>
-                </button>
+              <div class="install-card neu-raised">
+                <div class="install-card-body">
+                  <div class="install-card-icon icon-win"><i class="ph-fill ph-windows-logo"></i></div>
+                  <div class="install-card-content">
+                    <h3 class="install-card-title">Windows</h3>
+                    <p class="install-card-desc">Works in CMD or PowerShell.</p>
+                    <div class="install-code-block">
+                      <span class="install-code-prompt">></span>
+                      <code>powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"</code>
+                      <button class="copy-btn" aria-label="Copy command">
+                        <i class="ph-bold ph-copy"></i>
+                        <span class="copy-text">Copy</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
