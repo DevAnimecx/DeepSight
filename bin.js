@@ -117,19 +117,41 @@ function detectPlatforms() {
 }
 
 /* ───────── download ───────── */
-function httpsGet(url) {
+function httpGetRetry(url, retries) {
+  retries = retries || 3;
   return new Promise(function(resolve, reject) {
-    https.get(url, { headers: { 'User-Agent': 'deepsight-installer/' + VERSION } }, function(res) {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        https.get(res.headers.location, { headers: { 'User-Agent': 'deepsight-installer/' + VERSION } }, function(res2) {
-          if (res2.statusCode >= 300 && res2.statusCode < 400 && res2.headers.location) {
-            https.get(res2.headers.location, { headers: { 'User-Agent': 'deepsight-installer/' + VERSION } }, function(res3) {
-              resolve(res3);
-            }).on('error', reject);
-          } else { resolve(res2); }
-        }).on('error', reject);
-      } else { resolve(res); }
-    }).on('error', reject);
+    function attempt(n) {
+      var req = https.get(url, {
+        headers: { 'User-Agent': 'deepsight-installer/' + VERSION },
+        timeout: 30000
+      }, function(res) {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          https.get(res.headers.location, {
+            headers: { 'User-Agent': 'deepsight-installer/' + VERSION },
+            timeout: 30000
+          }, function(res2) {
+            if (res2.statusCode >= 300 && res2.statusCode < 400 && res2.headers.location) {
+              https.get(res2.headers.location, {
+                headers: { 'User-Agent': 'deepsight-installer/' + VERSION },
+                timeout: 30000
+              }, function(res3) { resolve(res3); }).on('error', function(e) {
+                if (n > 0) attempt(n - 1); else reject(e);
+              });
+            } else { resolve(res2); }
+          }).on('error', function(e) {
+            if (n > 0) attempt(n - 1); else reject(e);
+          });
+        } else { resolve(res); }
+      });
+      req.on('error', function(e) {
+        if (n > 0) attempt(n - 1); else reject(e);
+      });
+      req.on('timeout', function() {
+        req.destroy();
+        if (n > 0) attempt(n - 1); else reject(new Error('Download timed out'));
+      });
+    }
+    attempt(retries);
   });
 }
 
@@ -138,14 +160,15 @@ function downloadRelease() {
     spin('Downloading DeepSight v' + VERSION + ' from GitHub...');
     var tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'deepsight-'));
     var zipPath = path.join(tmpDir, 'archive.zip');
-    var extractDir = path.join(tmpDir, 'extracted');
-    var file = fs.createWriteStream(zipPath);
 
-    httpsGet(ZIP_URL).then(function(res) {
+    httpGetRetry(ZIP_URL).then(function(res) {
       if (res.statusCode !== 200) {
         reject(new Error('Download failed (HTTP ' + res.statusCode + ')'));
         return;
       }
+      var file = fs.createWriteStream(zipPath);
+      var totalBytes = 0;
+      res.on('data', function(chunk) { totalBytes += chunk.length; });
       res.pipe(file);
       file.on('finish', function() {
         file.close();
@@ -154,16 +177,21 @@ function downloadRelease() {
 
         spin('Extracting...');
         try {
-          extractZip(zipPath, extractDir);
+          var extractDir = extractZip(zipPath, tmpDir);
           var items = fs.readdirSync(extractDir);
-          var rootDir = items.find(function(i) {
-            return fs.statSync(path.join(extractDir, i)).isDirectory();
-          });
-          if (!rootDir) {
-            reject(new Error('No directory found in extracted zip'));
+          if (items.length === 0) {
+            reject(new Error('Extraction produced empty directory'));
             return;
           }
-          var srcDir = path.join(extractDir, rootDir);
+          /* Find source directory — works for both nested and flat zips */
+          var srcDir = extractDir;
+          var dirs = items.filter(function(i) {
+            return fs.statSync(path.join(extractDir, i)).isDirectory() && !i.startsWith('.') && i !== '__MACOSX';
+          });
+          if (dirs.length === 1) {
+            /* GitHub archive wraps in a single subdirectory */
+            srcDir = path.join(extractDir, dirs[0]);
+          }
           var fileCount = countFiles(srcDir);
           ok('Extracted (' + fileCount + ' files)');
           resolve(srcDir);
@@ -171,60 +199,53 @@ function downloadRelease() {
           reject(new Error('Extraction failed: ' + e.message));
         }
       });
+      file.on('error', reject);
     }).catch(reject);
   });
 }
 
-function extractZip(zipPath, dest) {
-  var pf = os.platform();
+function extractZip(zipPath, tmpDir) {
+  var dest = path.join(tmpDir, 'content');
   fs.mkdirSync(dest, { recursive: true });
+  var pf = os.platform();
 
   if (pf === 'win32') {
-    /* Use PowerShell Expand-Archive */
-    execSync(
-      'powershell -NoProfile -Command "& {Expand-Archive -Path \'' + zipPath.replace(/'/g, "''") + '\' -DestinationPath \'' + dest.replace(/'/g, "''") + '\' -Force}"',
-      { stdio: 'pipe', timeout: 60000 }
-    );
-  } else {
-    /* macOS / Linux — try unzip, then tar */
+    /* Use PowerShell Expand-Archive (handle path quoting carefully) */
+    var psCmd = 'Expand-Archive -Path "' + zipPath.replace(/"/g, '\\"') + '" -DestinationPath "' + dest.replace(/"/g, '\\"') + '" -Force';
     try {
-      execSync('unzip -o "' + zipPath + '" -d "' + dest + '" 2>/dev/null', {
-        stdio: 'pipe',
-        timeout: 60000
-      });
-    } catch (e1) {
+      execSync('powershell -NoProfile -Command "' + psCmd.replace(/"/g, '\\"') + '"', { stdio: 'pipe', timeout: 60000 });
+    } catch (e) {
+      /* Fallback: try with Python */
       try {
-        execSync('tar -xzf "' + zipPath + '" -C "' + dest + '" 2>/dev/null', {
-          stdio: 'pipe',
-          timeout: 60000
-        });
+        execSync('python -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"', { stdio: 'pipe', timeout: 60000 });
       } catch (e2) {
-        try {
-          execSync('7z x "' + zipPath + '" -o"' + dest + '" -y', {
-            stdio: 'pipe',
-            timeout: 60000
-          });
-        } catch (e3) {
-          /* Last resort: use python */
-          try {
-            execSync('python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"', {
-              stdio: 'pipe',
-              timeout: 60000
-            });
-          } catch (e4) {
-            execSync('python -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"', {
-              stdio: 'pipe',
-              timeout: 60000
-            });
-          }
-        }
+        throw new Error('Extraction failed: no method works');
       }
     }
+  } else {
+    /* macOS / Linux — try unzip, then tar, then 7z, then python3 */
+    var methods = [
+      'unzip -o "' + zipPath + '" -d "' + dest + '" 2>/dev/null',
+      'tar -xzf "' + zipPath + '" -C "' + dest + '" 2>/dev/null',
+      '7z x "' + zipPath + '" -o"' + dest + '" -y',
+      'python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"',
+      'python -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"'
+    ];
+    var extracted = false;
+    for (var m = 0; m < methods.length; m++) {
+      try {
+        execSync(methods[m], { stdio: 'pipe', timeout: 60000 });
+        extracted = true;
+        break;
+      } catch (e) { /* try next */ }
+    }
+    if (!extracted) throw new Error('Extraction failed: no method works');
   }
 
-  if (!fs.existsSync(dest)) {
-    fs.mkdirSync(dest, { recursive: true });
+  if (!fs.existsSync(dest) || fs.readdirSync(dest).length === 0) {
+    throw new Error('Extraction failed: destination is empty');
   }
+  return dest;
 }
 
 function countFiles(dir) {
@@ -440,5 +461,11 @@ function readAnswer() {
     return 'y';
   }
 }
+
+/* ───────── global error guard ───────── */
+process.on('uncaughtException', function(err) {
+  console.error('\n  \u2717 Unexpected error: ' + (err.message || err));
+  process.exit(1);
+});
 
 main();
