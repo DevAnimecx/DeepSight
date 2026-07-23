@@ -7,7 +7,7 @@ description: >
   code review. Triggers on: /review, /audit, /deepsight, "review this code", "audit security",
   "check architecture", "find bugs", "performance review", "code quality check".
 ---
-> **DeepSight v0.2.1 — Universal AI Skill Platform**
+> **DeepSight v0.2.5 — Universal AI Skill Platform**
 > This skill now supports Claude Desktop, Claude Code, OpenAI Codex CLI, and Custom GPT.
 > Platform-specific instructions in `_platforms/` directory.
 
@@ -122,9 +122,24 @@ node detect-platform.js --json
 - `_platforms/openai/codex-instructions.md`
 - `_platforms/openai/gpt-instructions.md`
 
-### New in v0.2.1
-- **10th agent**: Dependency Auditor (`agents/dependency.md`)
-- **Framework guides**: Vue.js (`references/framework-vue.md`), Django (`references/framework-django.md`)
-- **Auto-detect installer**: Detects all installed AI platforms and configures each
-- **Agent upgrades**: All 9 agents with enhanced detection patterns
-- **Unified output schema**: Same `file:line -> severity -> finding -> fix` format across all platforms
+### DeepSight v0.2.5 Release Notes
+
+**Focus:** Making `npx deepsight` bulletproof on every platform.
+
+#### New
+- Zero-dependency `npx deepsight` install — works without bash, curl, or wget
+- Three-layer extraction fallback on Windows: PowerShell temp script → tar → Python zipfile
+- Graceful stdin handling — `readAnswer()` uses numeric fd to avoid TTY crashes
+- Prompt-based platform detection: "Install for $PLATFORM? (Y/n)" before each destination
+
+#### Changed
+- **npx deepsight** is now the recommended install method (vs. curl|bash)
+- Landing page redesigned — animated gradient "Recommended" card
+- No Node.js required after install — skill is fully self-contained
+- All shell installers auto-detect Claude Desktop, Claude Code, Codex CLI, and GPT
+
+#### Fixed
+- `npx deepsight` crashes on Node.js <22 — `process.stdin` read failure fixed
+- Windows ZIP extraction — temp PowerShell script avoids inline quote collisions
+- Async race condition in download pipeline — Promise chain properly wired
+- Leaked tokens in test fixtures — sensitive content sanitized before git push

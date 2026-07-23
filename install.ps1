@@ -2,13 +2,13 @@ param([string]$Dir = "$env:USERPROFILE\.agents\skills\deepsight")
 
 $Repo = "DevAnimecx/DeepSight"
 $Branch = "main"
-$Version = "v0.2.1"
+$Version = "v0.2.5"
 $DesktopDir = "$env:APPDATA\Claude\agents\skills\deepsight"
 $CodeDir = "$env:USERPROFILE\.agents\skills\deepsight"
 
 Write-Host ""
 Write-Host "===============================================" -ForegroundColor Cyan
-Write-Host "    DeepSight v0.2.1 Universal Installer" -ForegroundColor Cyan
+Write-Host "    DeepSight v0.2.5 Universal Installer" -ForegroundColor Cyan
 Write-Host "   AI-Powered Code Review -- Free" -ForegroundColor Cyan
 Write-Host "   Supports: Claude, Codex CLI, GPT" -ForegroundColor Cyan
 Write-Host "===============================================" -ForegroundColor Cyan
@@ -95,8 +95,7 @@ Write-Host "One-liner:" -ForegroundColor Yellow
 Write-Host "  powershell -c ""iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$Branch/install.ps1 | iex""" -ForegroundColor Gray
 Write-Host "  (Run from CMD or PowerShell)" -ForegroundColor Gray
 Write-Host ""
-Write-Host "New in v0.2.1: Universal AI Skill Platform" -ForegroundColor Cyan
-Write-Host "  - Works with Claude Desktop, Claude Code, OpenAI Codex CLI, Custom GPT" -ForegroundColor Gray
-Write-Host "  - 10 agents including new Dependency Auditor" -ForegroundColor Gray
-Write-Host "  - Auto-detect your AI platforms" -ForegroundColor Gray
+Write-Host "New to v0.2.5: npx deepsight — zero-dep install" -ForegroundColor Cyan
+Write-Host "  - One-command install: npx deepsight (works on any OS)" -ForegroundColor Gray
+Write-Host "  - 10 agents + automatic platform detection" -ForegroundColor Gray
 Write-Host ""

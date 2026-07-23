@@ -1,9 +1,9 @@
 # DeepSight — The Agentic Code Intelligence Platform
 
-> Premium, token-optimized Claude Skill that orchestrates a Nine-Agent "Squad Review" to simulate a Senior Staff Engineer's audit.
+> Premium, token-optimized AI Skill that orchestrates a 10-Agent "Squad Review" to simulate a Senior Staff Engineer's audit.
 
-**Version:** v0.2.1  
-**Date:** July 21, 2026  
+**Version:** v0.2.5  
+**Date:** July 23, 2026  
 **Token Efficiency Target:** <50K tokens/session (vs. 500K industry avg)
 
 ---
@@ -12,7 +12,7 @@
 
 One command. Installs to any AI platform.
 
-**Quickest (any OS — no download)**
+**Quickest (any OS — no download needed)**
 ```bash
 npx deepsight
 ```
@@ -44,7 +44,10 @@ bash scripts/run-semgrep.sh path/to/your/code
 ```
 deepsight-skill/
 ├── SKILL.md                # Main orchestrator (YAML header + workflow)
-├── agents/                 # 9 specialized sub-agent instructions
+├── _platforms/             # Platform-specific configs
+│   ├── claude/             # Claude Desktop + Claude Code
+│   └── openai/             # Codex CLI + Custom GPT
+├── agents/                 # 10 specialized sub-agent instructions
 │   ├── security.md         # DeepSight-Sec (Red Teamer)
 │   ├── architecture.md     # DeepSight-Arch (Staff Architect)
 │   ├── solid.md            # DeepSight-Solid (Design Patterns)
@@ -53,7 +56,8 @@ deepsight-skill/
 │   ├── error.md            # DeepSight-Err (Reliability Eng)
 │   ├── smell.md            # DeepSight-Smell (Code Hygienist)
 │   ├── pattern.md          # DeepSight-Pattern (Framework Guru)
-│   └── data.md             # DeepSight-Data (Privacy Officer)
+│   ├── data.md             # DeepSight-Data (Privacy Officer)
+│   └── dependency.md       # DeepSight-Dep (Dependency Auditor)
 ├── scripts/                # Layer 1 deterministic analysis
 │   ├── run-semgrep.sh      # Semgrep + regex security scanner
 │   ├── generate-poc.py     # Exploit PoC generator
@@ -62,16 +66,22 @@ deepsight-skill/
 │   ├── security-rules.md   # OWASP Top 10 rules
 │   ├── arch-patterns.md    # Hexagonal/Clean Architecture
 │   ├── team-playbook.md    # Project conventions (customize per repo)
-│   └── framework-guides/   # React, Laravel, Next.js specifics
+│   └── framework-guides/   # React, Laravel, Next.js, Vue, Django
 │       ├── react.md
 │       ├── laravel.md
-│       └── nextjs.md
+│       ├── nextjs.md
+│       ├── vue.md
+│       └── django.md
 ├── assets/                 # Templates and configuration
 │   ├── report-template.md  # GitHub Comment template
 │   └── risk-matrix.json    # Severity scoring logic
 ├── tests/                  # Validation fixtures
 │   ├── vulnerable-code/    # Sample bad code (7 files)
 │   └── expected-output/    # Ground truth test cases
+├── bin.js                  # npm install entry point
+├── package.json            # npm package definition
+├── install.sh              # macOS/Linux installer
+├── install.ps1             # Windows installer
 └── README.md               # This file
 ```
 
@@ -96,7 +106,7 @@ Agents trace data flow on-demand using Grep/Glob/Read. Validates end-to-end secu
 
 **Lazy loading:** Agents read only the specific functions/classes needed.
 
-## The Nine Agents
+## The Ten Agents
 
 | Agent | Role | Focus |
 |-------|------|-------|
@@ -109,6 +119,7 @@ Agents trace data flow on-demand using Grep/Glob/Read. Validates end-to-end secu
 | **DeepSight-Smell** | Code Hygienist | Long methods, magic numbers, duplication |
 | **DeepSight-Pattern** | Framework Guru | Stack-specific idioms (React, Laravel) |
 | **DeepSight-Data** | Privacy Officer | PII leakage, hardcoded secrets |
+| **DeepSight-Dep** | Dependency Auditor | Supply chain risks, outdated libs |
 
 ## Output Format
 
@@ -132,13 +143,35 @@ Every finding uses the **Caveman Output** format: `file:line → severity → fi
 
 **Target:** 500K → 30-50K tokens/session (90% reduction)
 
+## v0.2.5 Release Notes
+
+**Focus:** Making `npx deepsight` bulletproof on every platform.
+
+### New
+- Zero-dependency `npx deepsight` install — works without bash, curl, or wget
+- Three-layer extraction fallback on Windows: PowerShell temp script → tar → Python zipfile
+- Graceful stdin handling — `readAnswer()` uses numeric fd to avoid TTY crashes
+- Prompt-based platform detection: "Install for $PLATFORM? (Y/n)" before each destination
+
+### Changed
+- **npx deepsight** is now the recommended install method (vs. curl|bash)
+- Landing page redesigned — animated gradient "Recommended" card
+- No Node.js required after install — skill is fully self-contained
+- All shell installers auto-detect Claude Desktop, Claude Code, Codex CLI, and GPT
+
+### Fixed
+- `npx deepsight` crashes on Node.js <22 — `process.stdin` read failure fixed
+- Windows ZIP extraction — temp PowerShell script avoids inline quote collisions
+- Async race condition in download pipeline — Promise chain properly wired
+- Leaked tokens in test fixtures — sensitive content sanitized before git push
+
 ## Customization
 
 ### Team Playbook
 Edit `references/team-playbook.md` with your team's conventions (naming, error handling, API design, etc.).
 
 ### Framework Guides
-Add framework-specific guides in `references/framework-guides/`. Currently includes React, Laravel, Next.js.
+Add framework-specific guides in `references/framework-guides/`. Currently includes React, Laravel, Next.js, Vue, Django.
 
 ### Security Rules
 Extend `references/security-rules.md` with custom rules or company-specific policies.
@@ -153,6 +186,3 @@ Extend `references/security-rules.md` with custom rules or company-specific poli
 ## License
 
 MIT
-
-
-

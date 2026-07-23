@@ -4,7 +4,7 @@ set -euo pipefail
 R='\033[0;31m'; G='\033[0;32m'; Y='\033[1;33m'; B='\033[0;34m'; C='\033[0;36m'; N='\033[0m'
 REPO="DevAnimecx/DeepSight"
 BRANCH="main"
-VERSION="v0.2.1"
+VERSION="v0.2.5"
 DIR="${1:-$HOME/.agents/skills/deepsight}"
 
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -18,7 +18,7 @@ fi
 echo -e "${C}"
 cat << "EOF"
 ╔═══════════════════════════════════════════╗
-║    DeepSight v0.2.1 Universal Installer   ║
+║    DeepSight v0.2.5 Universal Installer   ║
 ║   AI-Powered Code Review - Free           ║
 ║   Supports: Claude, Codex CLI, GPT        ║
 ╚═══════════════════════════════════════════╝
@@ -143,8 +143,8 @@ echo -e "${Y}Quick Install One-Liners:${N}"
 echo "  macOS/Linux: bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/$BRANCH/install.sh)"
 echo "  Windows:     powershell -c \"iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$BRANCH/install.ps1 | iex\""
 echo ""
-echo -e "${C}New to v0.2.1: Universal AI Skill Platform${N}"
-echo "  - Works with Claude Desktop, Claude Code, OpenAI Codex CLI, Custom GPT"
-echo "  - 10 agents including new Dependency Auditor"
-echo "  - Auto-detect your AI platforms with: node detect-platform.js"
+echo -e "${C}New to v0.2.5: npx deepsight — zero-dependency install${N}"
+echo "  - One-command install: npx deepsight (works on any OS)"
+echo "  - 10 agents + automatic platform detection"
+echo "  - No Node.js required after install — self-contained skill"
 echo ""

@@ -11,10 +11,10 @@ const PKG = (() => {
   try {
     return require(path.join(__dirname, 'package.json'));
   } catch (e) {
-    return { name: 'deepsight', version: '0.2.1' };
+    return { name: 'deepsight', version: '0.2.5' };
   }
 })();
-const VERSION = PKG.version || '0.2.1';
+const VERSION = PKG.version || '0.2.5';
 const REPO = 'DevAnimecx/DeepSight';
 const ZIP_URL = 'https://github.com/' + REPO + '/archive/refs/heads/main.zip';
 
