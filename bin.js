@@ -374,6 +374,7 @@ function main() {
     console.log('');
     process.stdout.write('  Proceed? [Y/n] ');
     var answer = readAnswer();
+    if (!answer) answer = 'y';
     if (answer === 'n' || answer === 'no') {
       console.log('  \u2717 Cancelled.');
       return;
@@ -429,11 +430,13 @@ function main() {
 
 /* ───────── sync stdin reader ───────── */
 function readAnswer() {
-  var fd = (process.platform === 'win32') ? process.stdin : fs.openSync('/dev/stdin', 'rs');
-  var buf = Buffer.alloc(16);
-  var bytes = fs.readSync(fd, buf, 0, 16, 0);
-  if (process.platform !== 'win32') fs.closeSync(fd);
-  return buf.toString('utf8', 0, bytes).trim().toLowerCase();
+  try {
+    var buf = Buffer.alloc(16);
+    var bytes = fs.readSync(process.stdin.fd, buf, 0, 16, 0);
+    return buf.toString('utf8', 0, bytes).trim().toLowerCase();
+  } catch (e) {
+    return 'y';
+  }
 }
 
 main();
