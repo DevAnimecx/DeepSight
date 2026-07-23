@@ -48,6 +48,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="preload" href="https://unpkg.com/@phosphor-icons/web@2.1.1" as="style" onload="this.rel='stylesheet'">
   <link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="css/style.css"></noscript>
   <script type="application/ld+json">
@@ -82,6 +83,16 @@
 <body>
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <div class="orb-container" aria-hidden="true">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+  </div>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
 
   <div id="dynamic-nav"></div>
 
@@ -118,31 +129,65 @@
             </div>
           </div>
           <div class="hero-visual anim-slide-right delay-3">
-            <div class="code-window" aria-label="DeepSight output preview">
+            <div class="code-window" aria-label="DeepSight review output preview">
               <div class="code-window-header">
                 <span class="window-dot dot-red" aria-hidden="true"></span>
                 <span class="window-dot dot-yellow" aria-hidden="true"></span>
                 <span class="window-dot dot-green" aria-hidden="true"></span>
-                <span class="code-window-title">deepsight review output</span>
+                <span class="code-window-title">~/deepsight/review</span>
               </div>
               <div class="code-window-body">
-                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Sec</span><span class="c-keyword">]</span>  <span class="c-fix">2 vulnerabilities found</span></span>
-                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Arch</span><span class="c-keyword">]</span> <span class="c-fix">3 architecture issues</span></span>
-                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Perf</span><span class="c-keyword">]</span> <span class="c-fix">2 performance optimizations</span></span>
-                <span class="line"><span class="c-keyword">[</span><span class="c-highlight">Style</span><span class="c-keyword">]</span> <span class="c-fix">5 code smells cleaned up</span></span>
-                <span class="line"></span>
-                <span class="line"><span class="c-string">✓ Review complete · actionable results</span></span>
+                <span class="line"><span class="typing-line typing-line-1"><span class="c-keyword">[</span><span class="c-highlight">Sec</span><span class="c-keyword">]</span>  <span class="c-fix">2 vulnerabilities patched</span></span></span>
+                <span class="line"><span class="typing-line typing-line-2"><span class="c-keyword">[</span><span class="c-highlight">Arch</span><span class="c-keyword">]</span> <span class="c-fix">3 architecture violations fixed</span></span></span>
+                <span class="line"><span class="typing-line typing-line-3"><span class="c-keyword">[</span><span class="c-highlight">Perf</span><span class="c-keyword">]</span> <span class="c-fix">2 queries optimized (N+1 resolved)</span></span></span>
+                <span class="line"><span class="typing-line typing-line-4"><span class="c-keyword">[</span><span class="c-highlight">Style</span><span class="c-keyword">]</span> <span class="c-fix">5 code smells eliminated</span></span></span>
+                <span class="line"><span class="typing-line typing-line-5"><span class="c-string">✓ Review complete.</span><span class="code-cursor" aria-hidden="true"></span></span></span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>Scroll to explore</span>
+        <i class="ph-bold ph-caret-double-down"></i>
+      </div>
     </section>
+
+    <hr class="section-divider" aria-hidden="true">
+
+    <section class="stats-section reveal" aria-label="DeepSight by the numbers">
+      <div class="container">
+        <div class="stats-bar">
+          <div class="stat-item neu-raised reveal reveal-delay-1">
+            <div class="stat-icon"><i class="ph-fill ph-robot"></i></div>
+            <div class="stat-value">10<span class="stat-suffix">+</span></div>
+            <div class="stat-label">Specialized Agents</div>
+          </div>
+          <div class="stat-item neu-raised reveal reveal-delay-2">
+            <div class="stat-icon"><i class="ph-fill ph-shield-check"></i></div>
+            <div class="stat-value">100<span class="stat-suffix">+</span></div>
+            <div class="stat-label">Security Patterns</div>
+          </div>
+          <div class="stat-item neu-raised reveal reveal-delay-3">
+            <div class="stat-icon"><i class="ph-fill ph-devices"></i></div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Platforms Supported</div>
+          </div>
+          <div class="stat-item neu-raised reveal reveal-delay-4">
+            <div class="stat-icon"><i class="ph-fill ph-code"></i></div>
+            <div class="stat-value">0<span class="stat-suffix">$</span></div>
+            <div class="stat-label">Open Source (MIT)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" aria-hidden="true">
 
     <section id="features" aria-labelledby="features-title">
       <div class="container">
         <div class="section-header reveal">
-          <h2 id="features-title" class="section-title">What DeepSight checks.</h2>
+          <h2 id="features-title" class="section-title"><span class="gradient-text-accent">What DeepSight checks.</span></h2>
           <p class="section-subtitle">10 AI agents, each an expert in one area, working together to review your code.</p>
         </div>
         <div class="features-grid">
@@ -195,10 +240,12 @@
       </div>
     </section>
 
+    <hr class="section-divider" aria-hidden="true">
+
     <section id="install" aria-labelledby="install-title">
       <div class="container">
         <div class="section-header reveal">
-          <h2 id="install-title" class="section-title">Install in seconds.</h2>
+          <h2 id="install-title" class="section-title"><span class="gradient-text-accent">Install in seconds.</span></h2>
           <p class="section-subtitle">One command. Zero config. Works everywhere.</p>
         </div>
         <div class="install-wrapper reveal">
@@ -246,11 +293,17 @@
               <i class="ph-bold ph-check-circle"></i>
               <span>Open source (MIT)</span>
             </div>
+            <div class="install-feature">
+              <i class="ph-bold ph-check-circle"></i>
+              <span>10 agents included</span>
+            </div>
           </div>
           <p class="install-footnote">Supports Claude Desktop, OpenAI Codex CLI, and Custom GPT.</p>
         </div>
       </div>
     </section>
+
+    <hr class="section-divider" aria-hidden="true">
 
     <section id="about" aria-labelledby="about-title">
       <div class="container">
@@ -278,12 +331,14 @@
       </div>
     </section>
 
+    <hr class="section-divider" aria-hidden="true">
+
     <section class="cta-section reveal" aria-labelledby="cta-heading">
       <div class="container">
         <h2 id="cta-heading" class="section-title">Ready to review smarter?</h2>
         <p class="section-subtitle">Star us on GitHub or install DeepSight now. It's free and open source.</p>
         <div class="cta-actions">
-          <a href="https://github.com/DevAnimecx/DeepSight" target="_blank" rel="noopener noreferrer" class="neu-btn neu-btn-accent neu-btn-lg">
+          <a href="https://github.com/DevAnimecx/DeepSight" target="_blank" rel="noopener noreferrer" class="neu-btn neu-btn-accent neu-btn-lg neu-btn-glow">
             <i class="ph-bold ph-star"></i>
             Star on GitHub
           </a>
@@ -297,8 +352,63 @@
 
   </main>
 
+  <hr class="section-divider" aria-hidden="true">
+
   <div id="dynamic-footer"></div>
 
   <script src="js/components.js" defer></script>
+  <script defer>
+    var bar = document.getElementById('scrollProgress');
+    if (bar) {
+      window.addEventListener('scroll', function() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (scrollTop / scrollHeight * 100) + '%';
+      });
+    }
+    var particles = document.getElementById('particles');
+    if (particles) {
+      for (var i = 0; i < 30; i++) {
+        var p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+        p.style.animationDuration = (10 + Math.random() * 20) + 's';
+        p.style.animationDelay = (Math.random() * 20) + 's';
+        p.style.opacity = 0.1 + Math.random() * 0.3;
+        particles.appendChild(p);
+      }
+    }
+    var reveals = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(function(r) { observer.observe(r); });
+    document.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var code = this.parentElement.querySelector('code');
+        if (!code) return;
+        var text = code.textContent || code.innerText;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(function() {
+            var span = btn.querySelector('.copy-text');
+            if (span) {
+              var orig = span.textContent;
+              span.textContent = 'Copied!';
+              btn.classList.add('copied');
+              setTimeout(function() {
+                span.textContent = orig;
+                btn.classList.remove('copied');
+              }, 2000);
+            }
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
