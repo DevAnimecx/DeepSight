@@ -210,16 +210,28 @@ function extractZip(zipPath, tmpDir) {
   var pf = os.platform();
 
   if (pf === 'win32') {
-    /* Use PowerShell Expand-Archive (handle path quoting carefully) */
-    var psCmd = 'Expand-Archive -Path "' + zipPath.replace(/"/g, '\\"') + '" -DestinationPath "' + dest.replace(/"/g, '\\"') + '" -Force';
+    /* Write a temp PowerShell script to avoid inline quoting hell */
+    var psFile = path.join(tmpDir, 'extract.ps1');
+    fs.writeFileSync(psFile, 'param($z,$d) Expand-Archive -Path $z -DestinationPath $d -Force', 'utf-8');
     try {
-      execSync('powershell -NoProfile -Command "' + psCmd.replace(/"/g, '\\"') + '"', { stdio: 'pipe', timeout: 60000 });
+      execSync(
+        'powershell -NoProfile -ExecutionPolicy Bypass -File "' + psFile + '" -z "' + zipPath + '" -d "' + dest + '"',
+        { stdio: 'pipe', timeout: 60000 }
+      );
     } catch (e) {
-      /* Fallback: try with Python */
+      /* Fallback 1: tar (Windows 10+ build 17063) */
       try {
-        execSync('python -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"', { stdio: 'pipe', timeout: 60000 });
+        execSync('tar -xf "' + zipPath + '" -C "' + dest + '" 2>nul', { stdio: 'pipe', timeout: 60000 });
       } catch (e2) {
-        throw new Error('Extraction failed: no method works');
+        /* Fallback 2: Python zipfile */
+        try {
+          execSync(
+            'python -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "' + zipPath + '" "' + dest + '"',
+            { stdio: 'pipe', timeout: 60000 }
+          );
+        } catch (e3) {
+          throw new Error('Extraction: no method works');
+        }
       }
     }
   } else {
