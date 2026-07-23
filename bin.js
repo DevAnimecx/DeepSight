@@ -333,15 +333,17 @@ function main() {
   if (flags.list) return;
 
   /* ── download ── */
-  var srcDir;
-  try {
-    srcDir = downloadRelease();
-  } catch (e) {
+  downloadRelease().then(function(srcDir) {
+    doInstall(platforms, flags, srcDir);
+  }).catch(function(e) {
     console.error('  \u2717 Download failed: ' + e.message);
     process.exit(1);
-  }
+  });
+}
 
+function doInstall(platforms, flags, srcDir) {
   /* ── filter targets ── */
+  var H = os.homedir();
   var targets = platforms.filter(function(p) { return p.agentDir; });
   if (flags.claude) targets = targets.filter(function(p) { return p.id.indexOf('claude') === 0; });
   if (flags.codex) targets = targets.filter(function(p) { return p.id === 'codex'; });

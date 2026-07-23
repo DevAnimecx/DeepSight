@@ -1,6 +1,6 @@
 {
   "name": "deepsight",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Universal AI Skill Platform — Install DeepSight code review agents with one command",
   "keywords": ["code-review", "ai", "security", "claude", "openai", "codex", "static-analysis"],
   "homepage": "https://deepsightskill.vercel.app",
