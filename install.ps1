@@ -92,7 +92,8 @@ if ($env:OPENAI_API_KEY) {
 }
 
 Write-Host "One-liner:" -ForegroundColor Yellow
-Write-Host "  iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$Branch/install.ps1 | iex" -ForegroundColor Gray
+Write-Host "  powershell -c ""iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$Branch/install.ps1 | iex""" -ForegroundColor Gray
+Write-Host "  (Run from CMD or PowerShell)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "New in v0.2.1: Universal AI Skill Platform" -ForegroundColor Cyan
 Write-Host "  - Works with Claude Desktop, Claude Code, OpenAI Codex CLI, Custom GPT" -ForegroundColor Gray

@@ -141,7 +141,7 @@ fi
 
 echo -e "${Y}Quick Install One-Liners:${N}"
 echo "  macOS/Linux: bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/$BRANCH/install.sh)"
-echo "  Windows:     iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$BRANCH/install.ps1 | iex"
+echo "  Windows:     powershell -c \"iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$BRANCH/install.ps1 | iex\""
 echo ""
 echo -e "${C}New to v0.2.1: Universal AI Skill Platform${N}"
 echo "  - Works with Claude Desktop, Claude Code, OpenAI Codex CLI, Custom GPT"

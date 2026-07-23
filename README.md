@@ -17,9 +17,9 @@ One command. Installs to both **Claude Desktop** and **Claude Code**.
 bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)
 ```
 
-**Windows (PowerShell)**
+**Windows (CMD or PowerShell)**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex
+powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"
 ```
 
 ## Quick Start

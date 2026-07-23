@@ -23,8 +23,8 @@ One command installs to both **Claude Desktop** and **Claude Code**:
 # macOS / Linux
 bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)
 
-# Windows (PowerShell)
-iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex
+# Windows (CMD or PowerShell)
+powershell -c "iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.ps1 | iex"
 ```
 
 Or copy this folder to any of these paths:
