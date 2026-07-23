@@ -17,10 +17,13 @@ description: >
 
 ## Install (One Command)
 
-One command installs to both **Claude Desktop** and **Claude Code**:
+One command installs to any AI platform:
 
 ```bash
-# macOS / Linux
+# Any OS (requires Node.js)
+npx deepsight
+
+# macOS / Linux (no Node.js needed)
 bash <(curl -fsSL https://raw.githubusercontent.com/DevAnimecx/DeepSight/main/install.sh)
 
 # Windows (CMD or PowerShell)

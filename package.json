@@ -1,0 +1,22 @@
+{
+  "name": "deepsight",
+  "version": "0.2.1",
+  "description": "Universal AI Skill Platform — Install DeepSight code review agents with one command",
+  "keywords": ["code-review", "ai", "security", "claude", "openai", "codex", "static-analysis"],
+  "homepage": "https://deepsightskill.vercel.app",
+  "bugs": { "url": "https://github.com/DevAnimecx/DeepSight/issues" },
+  "license": "MIT",
+  "author": "Team Blackvault (https://github.com/DevAnimecx)",
+  "funding": { "type": "github", "url": "https://github.com/sponsors/DevAnimecx" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevAnimecx/DeepSight.git"
+  },
+  "bin": {
+    "deepsight": "./bin.js"
+  },
+  "files": ["bin.js", "README.md", "LICENSE"],
+  "engines": { "node": ">=16.0.0" },
+  "preferGlobal": true,
+  "type": "commonjs"
+}

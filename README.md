@@ -10,7 +10,12 @@
 
 ## Quick Install
 
-One command. Installs to both **Claude Desktop** and **Claude Code**.
+One command. Installs to any AI platform.
+
+**Quickest (any OS — no download)**
+```bash
+npx deepsight
+```
 
 **macOS / Linux**
 ```bash
