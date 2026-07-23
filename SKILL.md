@@ -7,6 +7,11 @@ description: >
   code review. Triggers on: /review, /audit, /deepsight, "review this code", "audit security",
   "check architecture", "find bugs", "performance review", "code quality check".
 ---
+> **DeepSight v0.2.1 — Universal AI Skill Platform**
+> This skill now supports Claude Desktop, Claude Code, OpenAI Codex CLI, and Custom GPT.
+> Platform-specific instructions in `_platforms/` directory.
+
+
 
 # DeepSight — Agentic Code Intelligence Platform
 
@@ -92,5 +97,31 @@ Synthesize all agent findings into a **single GitHub Comment**:
 - Diff-Only: Never read unchanged code unless Layer 3 requires it.
 - Model Routing: Haiku-4 for routine, Opus-4.7 for complex.
 - Session Compaction: Use /recap for long threads.
+## Universal Platform Support
 
+DeepSight now runs on multiple AI platforms:
 
+- **Claude Desktop** — via `claude_desktop_config.json` skill integration
+- **Claude Code** — via `~/.agents/skills/deepsight/` auto-detection
+- **OpenAI Codex CLI** — instructions in `_platforms/openai/codex-instructions.md`
+- **ChatGPT Custom GPT** — instructions in `_platforms/openai/gpt-instructions.md`
+
+### Cross-Platform Detection
+```bash
+node detect-platform.js
+# or with JSON output
+node detect-platform.js --json
+```
+
+### Platform-Specific Configs
+- `_platforms/claude/skill-instructions.md`
+- `_platforms/openai/unified-instructions.md`
+- `_platforms/openai/codex-instructions.md`
+- `_platforms/openai/gpt-instructions.md`
+
+### New in v0.2.1
+- **10th agent**: Dependency Auditor (`agents/dependency.md`)
+- **Framework guides**: Vue.js (`references/framework-vue.md`), Django (`references/framework-django.md`)
+- **Auto-detect installer**: Detects all installed AI platforms and configures each
+- **Agent upgrades**: All 9 agents with enhanced detection patterns
+- **Unified output schema**: Same `file:line -> severity -> finding -> fix` format across all platforms

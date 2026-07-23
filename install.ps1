@@ -1,19 +1,29 @@
-param([string]$Dir = "$env:APPDATA\Claude\agents\skills\deepsight")
+param([string]$Dir = "$env:USERPROFILE\.agents\skills\deepsight")
 
 $Repo = "DevAnimecx/DeepSight"
 $Branch = "main"
+$Version = "v0.2.1"
+$DesktopDir = "$env:APPDATA\Claude\agents\skills\deepsight"
 $CodeDir = "$env:USERPROFILE\.agents\skills\deepsight"
-$Version = "v0.1.1"
 
 Write-Host ""
 Write-Host "===============================================" -ForegroundColor Cyan
-Write-Host "        DeepSight $Version Installer" -ForegroundColor Cyan
-Write-Host "     AI-Powered Code Review -- Free" -ForegroundColor Cyan
+Write-Host "    DeepSight v0.2.1 Universal Installer" -ForegroundColor Cyan
+Write-Host "   AI-Powered Code Review -- Free" -ForegroundColor Cyan
+Write-Host "   Supports: Claude, Codex CLI, GPT" -ForegroundColor Cyan
 Write-Host "===============================================" -ForegroundColor Cyan
 Write-Host ""
 
-$destinations = @($Dir)
-if ($CodeDir -ne $Dir) { $destinations += $CodeDir }
+$destinations = @()
+if (Test-Path "$env:APPDATA\Claude") { 
+  $destinations += $DesktopDir
+  Write-Host "[DETECT] Claude Desktop found" -ForegroundColor Green
+}
+if (Get-Command claude -ErrorAction SilentlyContinue) { 
+  $destinations += $CodeDir
+  Write-Host "[DETECT] Claude Code found" -ForegroundColor Green
+}
+$destinations += $Dir
 
 $tmp = Join-Path $env:TEMP "deepsight-$([System.IO.Path]::GetRandomFileName()).zip"
 $extractDir = Join-Path $env:TEMP "deepsight-$([System.IO.Path]::GetRandomFileName())"
@@ -48,14 +58,14 @@ try {
   $git = Get-Command git -ErrorAction SilentlyContinue
   if ($git) {
     Write-Host "[...] Falling back to git clone..." -ForegroundColor Yellow
-    $primary = $destinations[0]
+    $primary = $dir
     if (Test-Path $primary) { Remove-Item $primary -Recurse -Force -ErrorAction SilentlyContinue }
     git clone --depth 1 "https://github.com/$Repo.git" $primary
-    if ($destinations.Count -gt 1 -and $destinations[1] -ne $primary) {
-      $secondary = $destinations[1]
-      New-Item -ItemType Directory -Path $secondary -Force | Out-Null
-      Get-ChildItem -Path $primary | Copy-Item -Destination $secondary -Recurse -Force
-      Write-Host "[OK] Installed to: $secondary" -ForegroundColor Green
+    foreach ($dest in $destinations) {
+      if ($dest -ne $primary) {
+        New-Item -ItemType Directory -Path $dest -Force | Out-Null
+        Get-ChildItem -Path $primary | Copy-Item -Destination $dest -Recurse -Force
+      }
     }
   } else {
     Write-Host "[FAIL] Install failed. Check your internet connection or install Git." -ForegroundColor Red
@@ -64,10 +74,28 @@ try {
 }
 
 Write-Host ""
-Write-Host "Quick Start:" -ForegroundColor Cyan
-Write-Host "  /review this PR"
-Write-Host "  /audit security of src/"
+Write-Host "DeepSight $Version installed!" -ForegroundColor Green
 Write-Host ""
+
+Write-Host "Platform-Specific Setup:" -ForegroundColor Cyan
+Write-Host ""
+if (Test-Path "$env:APPDATA\Claude") {
+  Write-Host "Claude:" -ForegroundColor Blue
+  Write-Host "  Next review: /review this PR" -ForegroundColor Gray
+  Write-Host "  Audit:       /audit security of src/" -ForegroundColor Gray
+  Write-Host ""
+}
+if ($env:OPENAI_API_KEY) {
+  Write-Host "OpenAI GPT: API key detected" -ForegroundColor Blue
+  Write-Host "  Instructions: _platforms/openai/gpt-instructions.md" -ForegroundColor Gray
+  Write-Host ""
+}
+
 Write-Host "One-liner:" -ForegroundColor Yellow
 Write-Host "  iwr -useb https://raw.githubusercontent.com/DevAnimecx/DeepSight/$Branch/install.ps1 | iex" -ForegroundColor Gray
+Write-Host ""
+Write-Host "New in v0.2.1: Universal AI Skill Platform" -ForegroundColor Cyan
+Write-Host "  - Works with Claude Desktop, Claude Code, OpenAI Codex CLI, Custom GPT" -ForegroundColor Gray
+Write-Host "  - 10 agents including new Dependency Auditor" -ForegroundColor Gray
+Write-Host "  - Auto-detect your AI platforms" -ForegroundColor Gray
 Write-Host ""

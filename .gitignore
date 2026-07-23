@@ -1,0 +1,7 @@
+build-v021.js
+write_*.py
+temp_*.ps1
+*.tmp
+*.log
+node_modules/
+.vs/

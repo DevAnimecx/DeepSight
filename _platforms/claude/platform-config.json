@@ -1,0 +1,20 @@
+{
+  "platform": "claude",
+  "version": "0.2.1",
+  "entry": "SKILL.md",
+  "agents_dir": "agents/",
+  "desktop_config": {
+    "windows": "%APPDATA%\\Claude\\claude_desktop_config.json",
+    "macos": "~/Library/Application Support/Claude/claude_desktop_config.json",
+    "linux": "~/.config/Claude/claude_desktop_config.json"
+  },
+  "code_config": {
+    "path": "~/.agents/skills/deepsight/"
+  },
+  "supported_models": [
+    "claude-3-opus",
+    "claude-3-sonnet",
+    "claude-3-haiku",
+    "claude-4"
+  ]
+}

@@ -31,3 +31,16 @@ Always include estimated improvement:
 - Missing indexes on low-traffic tables
 
 
+
+
+## Enhanced: Database Indexing Recommendations
+- Check migration files for composite indexes on multi-column WHERE clauses
+- Flag missing covering indexes for frequent SELECT * queries
+- Detect redundant indexes (same leading column as another index)
+- Recommend partial indexes for filtered queries (WHERE status = 'active')
+
+## Enhanced: Connection Pool Configuration
+- Flag hardcoded pool sizes that don't scale with server resources
+- Detect missing connection timeout settings (connect_timeout, idle_timeout)
+- Flag connection pools without overflow/backup limits
+- Check for SSL/TLS enforcement in connection strings

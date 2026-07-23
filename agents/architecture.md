@@ -32,3 +32,10 @@ Verify each hop in the dependency graph.
 - Minor style inconsistencies
 
 
+
+
+## Enhanced Detection: Event-Driven vs Request-Driven Coupling
+- Flag services mixing event publishing with direct HTTP calls to same destination
+- Detect saga/orchestrator patterns by tracing async message chains
+- Flag missing timeout/retry policies on event-driven communication
+- Check for event schema versioning when using message queues

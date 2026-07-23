@@ -37,3 +37,16 @@ Also check `.env` files for committed secrets (use git grep).
 - Environment variable references (those are correct)
 
 
+
+
+## Enhanced: GDPR Data Retention Checks
+- Flag missing TTL/index on user data collections with no retention policy
+- Detect hardcoded retention periods > legal requirement (e.g., >24mo for GDPR)
+- Flag absence of data anonymization after retention expiry
+- Check for missing "right to be forgotten" deletion endpoints
+
+## Enhanced: Cookie Consent
+- Flag tracking/analytics cookies set before explicit user consent
+- Detect missing cookie consent banner or preference center
+- Flag third-party scripts loaded without prior consent check
+- Check localStorage usage for tracking without GDPR/CCPA compliance

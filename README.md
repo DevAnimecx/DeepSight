@@ -2,7 +2,7 @@
 
 > Premium, token-optimized Claude Skill that orchestrates a Nine-Agent "Squad Review" to simulate a Senior Staff Engineer's audit.
 
-**Version:** v0.1.1  
+**Version:** v0.2.1  
 **Date:** July 21, 2026  
 **Token Efficiency Target:** <50K tokens/session (vs. 500K industry avg)
 

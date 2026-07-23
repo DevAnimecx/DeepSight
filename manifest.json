@@ -1,0 +1,56 @@
+﻿{
+  "name": "DeepSight",
+  "short_name": "DeepSight",
+  "description": "Free, open-source AI code review with 10 specialized agents. Catch bugs, find vulnerabilities, and improve code quality — fast.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1b2e",
+  "theme_color": "#1a1b2e",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["developer", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Install DeepSight",
+      "short_name": "Install",
+      "description": "One-command installation for Claude, Codex CLI, and GPT",
+      "url": "/index.html#install",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Agents",
+      "short_name": "Agents",
+      "description": "Meet the 10 AI code review agents",
+      "url": "/agents.html",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "GitHub Repository",
+      "short_name": "GitHub",
+      "description": "View source code and contribute",
+      "url": "https://github.com/DevAnimecx/DeepSight",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://deepsightskill.vercel.app/"
+    }
+  ],
+  "prefer_related_applications": false
+}
